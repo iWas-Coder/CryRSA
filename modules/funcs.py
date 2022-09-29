@@ -6,6 +6,7 @@ Functions Module
 """
 
 import math
+from pwn import *
 from modules.timeout import timeout
 
 
@@ -33,17 +34,12 @@ def modinv(a, m):
         return x % m
 
 
-# 30min timeout if not found any.
-@timeout(1800)
 def factorize(n):
     """
     (...)
     """
     
-    poss_p = math.floor(math.sqrt(n))
-    if poss_p % 2 == 0:
-        poss_p += 1
-    while poss_p < n:
-        if n % poss_p == 0:
-            return poss_p
-        poss_p += 2
+    sqrt = int(n ** 0.5) + 1
+    for i in range(sqrt, 3, -2):
+        if n % i == 0:
+            return i, int(n/i)
