@@ -52,6 +52,11 @@ def main():
         if p and q:
             log.info(f"p: {p}")
             log.info(f"q: {q}")
+            time.sleep(2)
+            
+            m = key.n - (p + q -1)
+            log.info(f"m: {m}")
+            log.info(f"d: {funcs.modinv(key.e, m)}")
             compute.success("Done! :)")
         else:
             compute.failure("No factors found :(")
