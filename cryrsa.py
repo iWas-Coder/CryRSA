@@ -5,6 +5,7 @@ import modules.args as args
 import modules.funcs as funcs
 
 from Crypto.PublicKey import RSA
+import time
 
 
 # === MAIN === #
@@ -17,11 +18,12 @@ def main():
     args.init_args()
     
     # Import Key
-    f = open(args.key(), 'r')
-    key = RSA.importKey(f.read())
-    f.close()
+    with open(args.key(), 'r') as f:
+        key = RSA.importKey(f.read())
     
     p = log.progress("CryRSA")
+    p.status("Extracting components...")
+    time.sleep(2)
     
     log.info(f"e: {key.e}")
     log.info(f"n: {key.n}")
