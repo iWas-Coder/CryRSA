@@ -21,22 +21,40 @@ def main():
     with open(args.key(), 'r') as f:
         key = RSA.importKey(f.read())
     
-    p = log.progress("CryRSA")
-    p.status("Extracting components...")
+    extract = log.progress("EXTRACT")
+    
+    extract.status("Extracting public components...")
     time.sleep(2)
     
     log.info(f"e: {key.e}")
     log.info(f"n: {key.n}")
     
+    time.sleep(1)
+    
     if key.has_private():
+        extract.status("Extracting private components...")
+        time.sleep(2)
+        
         log.info(f"p: {key.p}")
         log.info(f"q: {key.q}")
         m = key.n - (key.p + key.q - 1)
         log.info(f"m: {m}")
         log.info(f"d: {funcs.modinv(key.e, m)}")
+        
+        extract.success("Done! :)")
     else:
-        p.status("Performing Prime Factorization:")
-        print(funcs.factorize(2022))
+        extract.failure("No private component found :(")
+        time.sleep(1)
+        compute = log.progress("COMPUTE")
+        
+        compute.status("Performing prime factorization...")
+        p, q = funcs.factorize(8633)
+        if p and q:
+            log.info(f"p: {p}")
+            log.info(f"q: {q}")
+            compute.success("Done! :)")
+        else:
+            compute.failure("No factors found :(")
 
 
 if __name__ == "__main__":
