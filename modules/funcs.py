@@ -34,12 +34,13 @@ def modinv(a, m):
         return x % m
 
 
-def factorize(n):
+def factorize(N):
     """
     (...)
     """
     
-    sqrt = int(n ** 0.5) + 1
+    sqrt = int(N ** 0.5) + 1
     for i in range(sqrt, 3, -2):
-        if n % i == 0:
-            return i, int(n/i)
+        if N % i == 0:
+            return i, int(N/i)
+    return None, None
