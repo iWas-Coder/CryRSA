@@ -21,7 +21,7 @@ def main():
     with open(args.key(), 'r') as f:
         key = RSA.importKey(f.read())
     
-    extract = log.progress("EXTRACT")
+    extract = log.progress("Extraction")
     
     extract.status("Extracting public components...")
     time.sleep(2)
@@ -45,7 +45,7 @@ def main():
     else:
         extract.failure("No private component found :(")
         time.sleep(1)
-        compute = log.progress("COMPUTE")
+        compute = log.progress("Compute")
         
         compute.status("Performing prime factorization...")
         p, q = funcs.factorize(8633)
