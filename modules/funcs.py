@@ -73,7 +73,7 @@ def compute(key: RSA.RsaKey):
     
     compute = log.progress("Compute")
     compute.status("Performing prime factorization...")
-    p, q = math.factorize(key.n, compute)
+    p, q = math.factorize(key.n)
     
     if p and q:
         log.info(f"p: {p}")

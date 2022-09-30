@@ -5,6 +5,8 @@ Math Module
 (...)
 """
 
+from sympy.ntheory import factorint
+
 
 def egcd(a, b):
     """
@@ -30,19 +32,12 @@ def modinv(a, m):
         return x % m
 
 
-def factorize(N, progress):
+def factorize(N):
     """
     (...)
     """
-    
-    compute_iters = lambda start, end, step: (end - start - 1) // step + 1
-    
-    sqrt = int(N ** 0.5) + 1
-    iters = compute_iters(sqrt, 3, -2)
-    
-    for iter, i in enumerate(range(sqrt, 3, -2)):
-        progress.status(f"Performing prime factorization...\nIters: {iter} / {iters}\nPercentage: {(iter/iters)*100} %")
-        if N % i == 0:
-            return i, int(N/i)
-    
-    return None, None
+
+    factors = factorint(N, verbose = True)
+    if len(factors) == 2 and all(exp == 1 for exp in factors.values()):
+        factors = list(factors.keys())
+        return factors[0], factors[1]
