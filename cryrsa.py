@@ -5,6 +5,10 @@ import modules.args as args
 import modules.funcs as funcs
 
 
+# === Ctrl + C === #
+funcs.ctrl_c()
+
+
 # === MAIN === #
 def main():
     """
