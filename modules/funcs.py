@@ -2,7 +2,7 @@
 Functions Module
 ~~~~~~~~~~~~~~~~
 
-(...)
+Module that wraps all global functionalities.
 """
 
 from pwn import *
@@ -16,7 +16,8 @@ import signal
 
 def ctrl_c():
     """
-    (...)
+    Trap SIGINT signal when doing 'Ctrl + C', and
+    redirect the program flow to the handler function.
     """
     
     def def_handler(sig, frame):
@@ -27,7 +28,7 @@ def ctrl_c():
 
 def import_key():
     """
-    (...)
+    Import the key to work with it more easily.
     """
     
     with open(args.key(), 'r') as f:
@@ -36,7 +37,8 @@ def import_key():
 
 def extract(key: RSA.RsaKey):
     """
-    (...)
+    Get and extract all components (public & private)
+    from the key.
     """
     
     extract = log.progress("Extraction")
@@ -68,7 +70,8 @@ def extract(key: RSA.RsaKey):
 
 def compute(key: RSA.RsaKey):
     """
-    (...)
+    Compute private components of the key by factorizing N
+    into p,q.
     """
     
     compute = log.progress("Compute")

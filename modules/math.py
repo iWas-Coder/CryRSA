@@ -2,7 +2,7 @@
 Math Module
 ~~~~~~~~~~~~~~~~
 
-(...)
+Module that wraps all mathematical tasks.
 """
 
 from sympy.ntheory import factorint
@@ -10,7 +10,7 @@ from sympy.ntheory import factorint
 
 def egcd(a, b):
     """
-    (...)
+    Extended Euclidean Algorithm (EEA) implementation.
     """
     
     if a == 0:
@@ -22,7 +22,7 @@ def egcd(a, b):
 
 def modinv(a, m):
     """
-    (...)
+    Inverse multiplicative modular function implementation.
     """
     
     g, x, y = egcd(a, m)
@@ -34,7 +34,7 @@ def modinv(a, m):
 
 def factorize(N):
     """
-    (...)
+    Factorize integer N to two prime numbers p,q.
     """
 
     factors = factorint(N, verbose = True)
