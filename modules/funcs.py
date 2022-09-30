@@ -5,42 +5,59 @@ Functions Module
 (...)
 """
 
-import math
 from pwn import *
-from modules.timeout import timeout
+from Crypto.PublicKey import RSA
+import modules.args as args
+import modules.math as math
+import time
 
 
-def egcd(a, b):
-    """
-    (...)
-    """
+def import_key():
+    with open(args.key(), 'r') as f:
+        return RSA.importKey(f.read())
+
+
+def extract(key: RSA.RsaKey):
+    extract = log.progress("Extraction")
     
-    if a == 0:
-        return (b, 0, 1)
+    extract.status("Extracting public components...")
+    time.sleep(2)
+    
+    log.info(f"e: {key.e}")
+    log.info(f"n: {key.n}")
+    
+    time.sleep(1)
+    
+    if key.has_private():
+        extract.status("Extracting private components...")
+        time.sleep(2)
+        
+        log.info(f"p: {key.p}")
+        log.info(f"q: {key.q}")
+        m = key.n - (key.p + key.q - 1)
+        log.info(f"m: {m}")
+        log.info(f"d: {math.modinv(key.e, m)}")
+        
+        extract.success("Done! :)")
     else:
-        g, y, x = egcd(b % a, a)
-        return (g, x - (b // a) * y, y)
+        extract.failure("No private component found :(")
+        time.sleep(1)
+        compute(key)
 
 
-def modinv(a, m):
-    """
-    (...)
-    """
+def compute(key: RSA.RsaKey):
+    compute = log.progress("Compute")
+    compute.status("Performing prime factorization...")
+    p, q = math.factorize(key.n)
     
-    g, x, y = egcd(a, m)
-    if g != 1:
-        raise Exception("Modular inverse does not exist")
+    if p and q:
+        log.info(f"p: {p}")
+        log.info(f"q: {q}")
+        time.sleep(2)
+        
+        m = key.n - (p + q -1)
+        log.info(f"m: {m}")
+        log.info(f"d: {math.modinv(key.e, m)}")
+        compute.success("Done! :)")
     else:
-        return x % m
-
-
-def factorize(N):
-    """
-    (...)
-    """
-    
-    sqrt = int(N ** 0.5) + 1
-    for i in range(sqrt, 3, -2):
-        if N % i == 0:
-            return i, int(N/i)
-    return None, None
+        compute.failure("No factors found :(")
