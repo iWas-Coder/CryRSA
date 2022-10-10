@@ -86,7 +86,7 @@ def compute(key: RSA.RsaKey):
         log.info(f"q: {q}")
         compute.success("Done! :)")
         
-        m = key.n - (p + q -1)
+        m = key.n - (p + q - 1)
         log.info(f"m: {m}")
         d = math.modinv(key.e, m)
         log.info(f"d: {d}")
