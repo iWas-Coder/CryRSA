@@ -68,7 +68,7 @@ def extract(key: RSA.RsaKey):
         d, p, q = compute(key)
         if d and p and q:
             private_key = RSA.construct((key.n, key.e, d, p , q))
-            print(private_key.decode())
+            print('\n' + private_key.exportKey().decode() + '\n')
 
 
 def compute(key: RSA.RsaKey):
