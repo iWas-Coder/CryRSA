@@ -65,7 +65,10 @@ def extract(key: RSA.RsaKey):
     else:
         extract.failure("No private component found :(")
         time.sleep(1)
-        compute(key)
+        d, p, q = compute(key)
+        if d and p and q:
+            private_key = RSA.construct((key.n, key.e, d, p , q))
+            print(private_key.decode())
 
 
 def compute(key: RSA.RsaKey):
@@ -85,6 +88,10 @@ def compute(key: RSA.RsaKey):
         
         m = key.n - (p + q -1)
         log.info(f"m: {m}")
-        log.info(f"d: {math.modinv(key.e, m)}")
+        d = math.modinv(key.e, m)
+        log.info(f"d: {d}")
+        
+        return d, p, q
     else:
         compute.failure("No factors found :(")
+        return None, None, None
