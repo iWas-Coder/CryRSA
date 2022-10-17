@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [[ "$1" == "extractKey" ]]; then
+  python3 ./extractKey/extractKey.py ${@:2}
+fi
